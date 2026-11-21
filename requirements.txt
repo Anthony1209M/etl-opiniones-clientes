@@ -1,0 +1,6 @@
+pyodbc
+requests
+fastapi
+uvicorn
+python-dotenv
+openpyxl

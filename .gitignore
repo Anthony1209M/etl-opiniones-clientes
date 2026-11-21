@@ -1,0 +1,6 @@
+.env
+logs/
+staging/
+__pycache__/
+venv/
+csvs/

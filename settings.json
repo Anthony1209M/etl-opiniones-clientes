@@ -1,0 +1,52 @@
+{
+  "worker": {
+    "run_interval_seconds": 0,
+    "max_parallel_sources": 4
+  },
+  "database": {
+    "server": "localhost",
+    "database": "analisis_opiniones",
+    "driver": "ODBC Driver 17 for SQL Server",
+    "user": "${DB_USER}",
+    "password": "${DB_PASSWORD}",
+    "batch_size": 5000
+  },
+  "staging": {
+    "mode": "files",
+    "directory": "staging"
+  },
+  "sources": [
+    {
+      "name": "survey",
+      "type": "csv",
+      "enabled": true,
+      "path": "csvs/survey.csv",
+      "columns": ["IdOpinion", "IdCliente", "IdProducto", "Fecha", "Comentario",
+                  "Clasificacion", "PuntajeSatisfaccion", "Fuente"]
+    },
+    {
+      "name": "web_reviews",
+      "type": "database",
+      "enabled": true,
+      "query": "SELECT IdReview, IdCliente, IdProducto, IdFuente, Fecha, Comentario, Rating FROM web_reviews"
+    },
+    {
+      "name": "social_comments",
+      "type": "api",
+      "enabled": true,
+      "url": "http://localhost:8000/comments",
+      "token": "${API_TOKEN}",
+      "timeout": 10,
+      "retries": 3
+    },
+    {
+    "name": "survey_excel",
+    "type": "excel",
+    "enabled": true,
+    "path": "excels/survey.xlsx",
+    "sheet": "Hoja1",
+    "columns": ["IdOpinion", "IdCliente", "IdProducto", "Fecha", "Comentario",
+                "Clasificacion", "PuntajeSatisfaccion", "Fuente"]
+     }
+  ]
+}
